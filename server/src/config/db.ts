@@ -5,11 +5,9 @@ const connectToDB = async () => {
   const connectOptions: ConnectOptions = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    autoReconnect: true,
-    keepAlive: true,
   } as ConnectOptions
 
-  mongoose.connect(MONGODB_URI!, connectOptions)
+  await mongoose.connect(MONGODB_URI!, connectOptions)
 
   const connection = mongoose.connection
   if (connection.readyState >= 1) {

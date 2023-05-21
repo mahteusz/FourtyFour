@@ -8,14 +8,14 @@ class Server {
     this.config()
   }
 
-  public config(): void {
+  private config(): void {
     this.app.set("port", process.env.PORT || 3000);
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
     this.configDB()
   }
 
-  public configDB(): void {
+  private configDB(): void {
     connectToDB()
   }
 
