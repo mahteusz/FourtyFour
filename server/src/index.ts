@@ -1,4 +1,5 @@
 import express from "express";
+import connectToDB from "./config/db";
 class Server {
   public app: express.Application;
 
@@ -11,7 +12,11 @@ class Server {
     this.app.set("port", process.env.PORT || 3000);
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
+    this.configDB()
+  }
 
+  public configDB(): void {
+    connectToDB()
   }
 
   public start(): void {
