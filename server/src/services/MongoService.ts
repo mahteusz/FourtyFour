@@ -2,14 +2,14 @@ import { Model } from "mongoose";
 import { IRepository } from "./types/IRepository";
 
 export class MongoService<T> implements IRepository<T> {
-  private model: Model<T>
+  private readonly model: Model<T>
 
   constructor(model: Model<T>) {
     this.model = model
   }
 
   async create(item: T): Promise<T> {
-    const newDocument = await this.model.create(item)
+    const newDocument = (await this.model.create(item)).save()
     return newDocument
   }
 
