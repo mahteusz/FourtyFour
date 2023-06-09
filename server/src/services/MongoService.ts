@@ -1,16 +1,11 @@
 import { Model } from "mongoose";
 import { IRepository } from "./types/IRepository";
-import User from "../models/User";
 
 export class MongoService<T extends Model<any>> implements IRepository<T> {
   private readonly model
 
-  constructor(bosta: T){
-    this.model = bosta
-  }
-
-  test = () => {
-    console.log(typeof this.model, this.model)
+  constructor(model: T){
+    this.model = model
   }
 
   async create(item: T): Promise<T> {

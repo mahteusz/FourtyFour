@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { JWT_SECRET } from "../util/secrets";
 import { JWTService } from "../services/JWTService";
-import User from "../models/User";
+import User from "../models/user";
 import { accessTokenTimeToExpire } from "../config/auth";
 import { BaseController } from "./baseController";
 
