@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { JWT_SECRET } from "../util/secrets";
 import { JWTService } from "../services/JWTService";
-import { User } from "../models/User";
+import User from "../models/User";
 import { accessTokenTimeToExpire } from "../config/auth";
+import { BaseController } from "./baseController";
 
-export class UserController {
+export class UserController extends BaseController<typeof User>{
 
   public async register(req: Request, res: Response): Promise<void> {
     const newUser = await User.create({
