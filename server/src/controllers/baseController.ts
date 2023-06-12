@@ -12,12 +12,6 @@ export class BaseController<T> implements IBaseController {
 
   post = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const newResource = new Model<T>(req.body)
-    const foundResource = await this.repository.findOne(req.body.id)
-    if (foundResource) {
-      res.status(409).json({ message: "Resource already exists" })
-      return
-    }
-
     const resource = await this.repository.create(newResource)
     res.status(201).json({ data: resource })
   }
@@ -33,7 +27,7 @@ export class BaseController<T> implements IBaseController {
   }
 
   get = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const resource = await this.repository.findOne(req.body.id)
+    const resource = await this.repository.findOne(req.params.id)
     if (!resource) {
       res.status(404).json({ message: "Resource not found" })
       return
@@ -43,8 +37,7 @@ export class BaseController<T> implements IBaseController {
   }
 
   patch = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const resource = new Model<T>(req.body)
-    const updated = await this.repository.update(req.body.id, resource)
+    const updated = await this.repository.update(req.params.id, req.body)
     if(!updated){
       res.status(204).json({ message: "No resource was updated" })
     }
@@ -53,7 +46,7 @@ export class BaseController<T> implements IBaseController {
   }
 
   delete = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const deleted = await this.repository.delete(req.body.id)
+    const deleted = await this.repository.delete(req.params.id)
     if (!deleted) {
       res.status(204).json({ message: "No resource was deleted" })
     }
