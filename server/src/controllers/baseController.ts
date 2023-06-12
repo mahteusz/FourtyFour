@@ -10,19 +10,13 @@ export class BaseController<T> implements IBaseController {
     this.repository = repository
   }
 
-  async post(req: Request, res: Response, next: NextFunction): Promise<void> {
+  post = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const newResource = new Model<T>(req.body)
-    const foundResource = await this.repository.findOne(req.body.id)
-    if (foundResource) {
-      res.status(409).json({ message: "Resource already exists" })
-      return
-    }
-
     const resource = await this.repository.create(newResource)
     res.status(201).json({ data: resource })
   }
 
-  async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
+  getAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const resources = await this.repository.find()
     if (resources.length === 0) {
       res.status(404).json({ message: "Resources not found" })
@@ -32,8 +26,8 @@ export class BaseController<T> implements IBaseController {
     res.status(200).json({ data: resources })
   }
 
-  async get(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const resource = await this.repository.findOne(req.body.id)
+  get = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const resource = await this.repository.findOne(req.params.id)
     if (!resource) {
       res.status(404).json({ message: "Resource not found" })
       return
@@ -42,22 +36,28 @@ export class BaseController<T> implements IBaseController {
     res.status(200).json({ data: resource })
   }
 
-  async patch(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const resource = new Model<T>(req.body)
-    const updated = await this.repository.update(req.body.id, resource)
-    if(!updated){
-      res.status(204).json({ message: "No resource was updated" })
+  patch = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    if (Object.keys(req.body).length === 0) {
+      res.status(422).json({ message: "Empty body" })
+      return
     }
 
-    res.status(200).json({ message: "Resource updated successfully" })
+    const updated = await this.repository.update(req.params.id, req.body)
+    if (!updated) {
+      res.status(404).json({ message: "Resource not found" })
+      return
+    }
+
+    res.status(204).json({})
   }
 
-  async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const deleted = await this.repository.delete(req.body.id)
+  delete = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const deleted = await this.repository.delete(req.params.id)
     if (!deleted) {
-      res.status(204).json({ message: "No resource was deleted" })
+      res.status(404).json({ message: "Resource not found" })
+      return
     }
 
-    res.status(200).json({ message: "Resource deleted successfully" })
+    res.status(204).json({})
   }
 }

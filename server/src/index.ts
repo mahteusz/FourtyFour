@@ -1,11 +1,17 @@
 import express from "express";
 import connectToDB from "./config/db";
+import { userRoute } from "./config/routes";
+import { UserRouter } from "./routes/UserRouter";
+import { UserController } from "./controllers/UserController";
+import { MongoService } from "./services/MongoService";
+import User from "./models/user";
 class Server {
   public app: express.Application;
 
   constructor() {
     this.app = express();
     this.config()
+    this.defineRoutes()
   }
 
   private config(): void {
@@ -17,6 +23,16 @@ class Server {
 
   private configDB(): void {
     connectToDB()
+  }
+
+  private defineRoutes(): void {
+    this.defineUserRoutes()
+  }
+
+  private defineUserRoutes(): void {
+    const mongoService = new MongoService<typeof User>(User)
+    const controller = new UserController(mongoService) 
+    this.app.use(userRoute, new UserRouter(controller).router)
   }
 
   public start(): void {
