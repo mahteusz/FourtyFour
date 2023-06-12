@@ -4,7 +4,6 @@ import { JWTService } from "../services/JWTService";
 import User from "../models/user";
 import { accessTokenTimeToExpire } from "../config/auth";
 import { BaseController } from "./baseController";
-import { IRepository } from "../services/types/IRepository";
 export class UserController extends BaseController<typeof User>{
 
   public async register(req: Request, res: Response): Promise<void> {
