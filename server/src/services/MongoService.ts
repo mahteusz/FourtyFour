@@ -19,14 +19,11 @@ export class MongoService<T extends Model<any>> implements IRepository<T> {
   }
 
   async delete(id: string): Promise<Boolean> {
-    console.log(this.model)
     const deleted = await this.model.deleteOne({ _id: id }).exec()
     return deleted.deletedCount === 1
   }
 
   async find(): Promise<T[]> {
-    console.log(this.model.modelName)
-    console.log(this.model)
     const documents = await this.model.find()
     return documents
   }

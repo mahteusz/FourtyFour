@@ -10,7 +10,7 @@ export class BaseController<T> implements IBaseController {
     this.repository = repository
   }
 
-  async post(req: Request, res: Response, next: NextFunction): Promise<void> {
+  post = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const newResource = new Model<T>(req.body)
     const foundResource = await this.repository.findOne(req.body.id)
     if (foundResource) {
@@ -22,7 +22,7 @@ export class BaseController<T> implements IBaseController {
     res.status(201).json({ data: resource })
   }
 
-  async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
+  getAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const resources = await this.repository.find()
     if (resources.length === 0) {
       res.status(404).json({ message: "Resources not found" })
@@ -32,7 +32,7 @@ export class BaseController<T> implements IBaseController {
     res.status(200).json({ data: resources })
   }
 
-  async get(req: Request, res: Response, next: NextFunction): Promise<void> {
+  get = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const resource = await this.repository.findOne(req.body.id)
     if (!resource) {
       res.status(404).json({ message: "Resource not found" })
@@ -42,7 +42,7 @@ export class BaseController<T> implements IBaseController {
     res.status(200).json({ data: resource })
   }
 
-  async patch(req: Request, res: Response, next: NextFunction): Promise<void> {
+  patch = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const resource = new Model<T>(req.body)
     const updated = await this.repository.update(req.body.id, resource)
     if(!updated){
@@ -52,7 +52,7 @@ export class BaseController<T> implements IBaseController {
     res.status(200).json({ message: "Resource updated successfully" })
   }
 
-  async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
+  delete = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const deleted = await this.repository.delete(req.body.id)
     if (!deleted) {
       res.status(204).json({ message: "No resource was deleted" })
