@@ -6,7 +6,7 @@ export class UserRouter extends BaseRouter {
     this.router.get("/", this.controller.getAll)
     this.router.get("/:id", this.controller.get)
     this.router.delete("/:id", this.controller.delete)
-    this.router.delete("/:id", this.controller.patch)
-    this.router.post("/register", (this.controller as UserController).register)
+    this.router.patch("/:id", this.controller.patch)
+    this.router.post("/", (this.controller as UserController).register)
   }
 }	
