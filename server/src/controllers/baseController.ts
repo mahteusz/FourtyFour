@@ -37,20 +37,27 @@ export class BaseController<T> implements IBaseController {
   }
 
   patch = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const updated = await this.repository.update(req.params.id, req.body)
-    if(!updated){
-      res.status(204).json({ message: "No resource was updated" })
+    if (Object.keys(req.body).length === 0) {
+      res.status(422).json({ message: "Empty body" })
+      return
     }
 
-    res.status(200).json({ message: "Resource updated successfully" })
+    const updated = await this.repository.update(req.params.id, req.body)
+    if (!updated) {
+      res.status(404).json({ message: "Resource not found" })
+      return
+    }
+
+    res.status(204).json({})
   }
 
   delete = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const deleted = await this.repository.delete(req.params.id)
     if (!deleted) {
-      res.status(204).json({ message: "No resource was deleted" })
+      res.status(404).json({ message: "Resource not found" })
+      return
     }
 
-    res.status(200).json({ message: "Resource deleted successfully" })
+    res.status(204).json({})
   }
 }
