@@ -4,7 +4,7 @@ import { IRepository } from "../services/types/IRepository";
 import { Model } from "mongoose";
 
 export class BaseController<T> implements IBaseController {
-  private readonly repository: IRepository<T>
+  protected readonly repository: IRepository<T>
 
   constructor(repository: IRepository<T>) {
     this.repository = repository
