@@ -1,7 +1,7 @@
-import { IEncrypter } from "./types/IEncrypter";
+import IEncrypter from "./types/IEncrypter";
 import bcrypt from 'bcrypt'
 
-export class BcryptService implements IEncrypter {
+export default class BcryptService implements IEncrypter {
   private readonly saltRounds: number
 
   constructor(saltRounds: number) {

@@ -1,6 +1,6 @@
-import { BaseRouter } from "./BaseRouter";
+import BaseRouter from "./BaseRouter";
 
-export class UserRouter extends BaseRouter {
+export default class UserRouter extends BaseRouter {
   defineRoutes() {
     this.router.get("/", this.controller.getAll)
     this.router.get("/:id", this.controller.get)

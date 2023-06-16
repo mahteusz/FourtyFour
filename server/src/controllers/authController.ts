@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from 'jsonwebtoken'
 import { JWT_SECRET } from "@util/secrets";
-export class AuthController {
+
+export default class AuthController {
 
   public authenticateJWT(req: Request, res: Response, next: NextFunction) {
     const token = req.headers['x-access-token'] as string

@@ -1,1 +1,3 @@
-export const saltRounds = 10
+const saltRounds = 10
+
+export default saltRounds

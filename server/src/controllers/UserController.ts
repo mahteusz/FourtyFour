@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { JWT_SECRET } from "@util/secrets";
-import { JWTService } from "@services/JWTService";
+import JWTService from "@services/JWTService";
 import IUser from "@models/types/IUser";
 import { accessTokenTimeToExpire, refreshTokenTimeToExpire } from "@config/auth";
-import { BaseController } from "./baseController";
-import { BcryptService } from "@services/BcryptService";
-import { saltRounds } from "@config/encrypt";
-export class UserController extends BaseController<IUser>{
+import BaseController from "./baseController";
+import BcryptService from "@services/BcryptService";
+import saltRounds from "@config/encrypt";
+export default class UserController extends BaseController<IUser>{
 
   public post = async (req: Request, res: Response): Promise<void> => {
     const accessTokenService = new JWTService(JWT_SECRET!, accessTokenTimeToExpire)

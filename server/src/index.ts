@@ -1,9 +1,9 @@
 import express from "express";
 import connectToDB from "@config/db";
-import { userRoute } from "@config/routes";
-import { UserRouter } from "@routes/UserRouter";
-import { UserController } from "@controllers/UserController";
-import { MongoService } from "@services/MongoService";
+import userRoute from "@config/routes";
+import UserRouter from "@routes/UserRouter";
+import UserController from "@controllers/UserController";
+import MongoService from "@services/MongoService";
 import UserModel from "@models/user";
 import IUser from "@models/types/IUser";
 class Server {
