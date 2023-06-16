@@ -2,14 +2,14 @@ import { IEncrypter } from "./types/IEncrypter";
 import bcrypt from 'bcrypt'
 
 export class BcryptService implements IEncrypter {
-  private readonly salt: number
+  private readonly saltRounds: number
 
-  constructor(salt: number) {
-    this.salt = salt
+  constructor(saltRounds: number) {
+    this.saltRounds = saltRounds
   }
 
   public async encrypt(text: string): Promise<string> {
-    const hash = await bcrypt.hash(text, this.salt)
+    const hash = await bcrypt.hash(text, this.saltRounds)
     return hash
   }
 
