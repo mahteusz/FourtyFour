@@ -1,14 +1,15 @@
 import { Model, isValidObjectId } from "mongoose";
 import { IRepository } from "./types/IRepository";
-export class MongoService<T extends Model<any>> implements IRepository<T> {
-  private readonly model
+export class MongoService<T> implements IRepository<T> {
+  private readonly model: Model<T>
 
-  constructor(model: T){
+  constructor(model: Model<T>){
     this.model = model
   }
 
   async create(item: T): Promise<T> {
-    const newDocument = (await this.model.create(item)).save()
+    const newDocument = new this.model(item)
+    await newDocument.save()
     return newDocument
   }
 
@@ -22,7 +23,7 @@ export class MongoService<T extends Model<any>> implements IRepository<T> {
   async delete(id: string): Promise<Boolean> {
     if(!isValidObjectId(id)) return false
 
-    const deleted = await this.model.deleteOne({ _id: id }).exec()
+    const deleted = await this.model.deleteOne({ _id: id })
     return deleted.deletedCount === 1
   }
 

@@ -1,20 +1,25 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { JWT_SECRET } from "../util/secrets";
 import { JWTService } from "../services/JWTService";
-import User from "../models/user";
-import { accessTokenTimeToExpire } from "../config/auth";
+import IUser from "../models/types/IUser";
+import { accessTokenTimeToExpire, refreshTokenTimeToExpire } from "../config/auth";
 import { BaseController } from "./baseController";
-export class UserController extends BaseController<typeof User>{
+import { BcryptService } from "../services/BcryptService";
+import { saltRounds } from "../config/encrypt";
+export class UserController extends BaseController<IUser>{
 
-  public async register(req: Request, res: Response): Promise<void> {
-    const newUser = await User.create({
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
-    })
+  public post = async (req: Request, res: Response): Promise<void> => {
+    const accessTokenService = new JWTService(JWT_SECRET!, accessTokenTimeToExpire)
+    const refreshTokenService = new JWTService(JWT_SECRET!, refreshTokenTimeToExpire)
+    const encryptService = new BcryptService(saltRounds)
+    
+    const password = req.body.password
+    const hashedPassword = await encryptService.encrypt(password)
 
-    const tokenService = new JWTService(JWT_SECRET!, accessTokenTimeToExpire)
-    let token = tokenService.generate({user: newUser._id})
-    res.status(200).json({token: token})
+    const newUser = await this.repository.create({...req.body, password: hashedPassword, })
+
+    const accessToken = accessTokenService.generate({user: newUser._id})
+    const refreshToken = refreshTokenService.generate({user: newUser._id})
+    res.status(200).json({accessToken, refreshToken})
   }
 }
