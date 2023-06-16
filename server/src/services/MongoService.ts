@@ -1,6 +1,6 @@
 import { Model, isValidObjectId } from "mongoose";
-import { IRepository } from "./types/IRepository";
-export class MongoService<T> implements IRepository<T> {
+import IRepository from "./types/IRepository";
+export default class MongoService<T> implements IRepository<T> {
   private readonly model: Model<T>
 
   constructor(model: Model<T>){

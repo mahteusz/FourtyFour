@@ -1,5 +1,5 @@
-import { UserPayload } from '../config/auth'
-import { IToken } from "./types/IToken";
+import { UserPayload } from '@config/auth'
+import IToken from "./types/IToken";
 import jwt from 'jsonwebtoken'
 
 type JWTDefaultPayload = {
@@ -7,7 +7,7 @@ type JWTDefaultPayload = {
   exp: number
 }
 
-export class JWTService implements IToken {
+export default class JWTService implements IToken {
   private readonly secret: string
   private readonly timeToExpire: string
 
