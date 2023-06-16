@@ -1,5 +1,5 @@
 import mongoose, { ConnectOptions } from 'mongoose'
-import { MONGODB_URI } from '../util/secrets'
+import { MONGODB_URI } from '@util/secrets'
 
 const connectToDB = async () => {
   const connectOptions: ConnectOptions = {

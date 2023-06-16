@@ -1,4 +1,4 @@
-import { UserPayload } from '../../config/auth'
+import { UserPayload } from '@config/auth'
 
 export interface IToken {
   generate: (userPayload: UserPayload) => string,

@@ -1,4 +1,4 @@
-import { UserPayload } from '../config/auth'
+import { UserPayload } from '@config/auth'
 import { IToken } from "./types/IToken";
 import jwt from 'jsonwebtoken'
 

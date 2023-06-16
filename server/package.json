@@ -4,7 +4,7 @@
   "description": "A social media REST API written in TypeScript using Node, Express, MongoDB and JWT",
   "main": "src/index.ts",
   "scripts": {
-    "start": "npx nodemon",
+    "start": "npx nodemon --exec ts-node -r tsconfig-paths/register ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "mateusmarques200@gmail.com",
@@ -16,6 +16,7 @@
     "@types/node": "^20.2.1",
     "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.0.4"
   },
   "dependencies": {
