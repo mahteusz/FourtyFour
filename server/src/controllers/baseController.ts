@@ -1,7 +1,6 @@
 import { IBaseController } from "./types/IBaseController";
 import { Request, Response, NextFunction } from "express"
 import { IRepository } from "../services/types/IRepository";
-import { Model } from "mongoose";
 
 export class BaseController<T> implements IBaseController {
   protected readonly repository: IRepository<T>
@@ -11,8 +10,7 @@ export class BaseController<T> implements IBaseController {
   }
 
   post = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const newResource = new Model<T>(req.body)
-    const resource = await this.repository.create(newResource)
+    const resource = await this.repository.create(req.body)
     res.status(201).json({ data: resource })
   }
 

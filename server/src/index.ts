@@ -4,7 +4,8 @@ import { userRoute } from "./config/routes";
 import { UserRouter } from "./routes/UserRouter";
 import { UserController } from "./controllers/UserController";
 import { MongoService } from "./services/MongoService";
-import User from "./models/user";
+import UserModel from "./models/user";
+import IUser from "./models/types/IUser";
 class Server {
   public app: express.Application;
 
@@ -30,7 +31,7 @@ class Server {
   }
 
   private defineUserRoutes(): void {
-    const mongoService = new MongoService<typeof User>(User)
+    const mongoService = new MongoService<IUser>(UserModel)
     const controller = new UserController(mongoService) 
     this.app.use(userRoute, new UserRouter(controller).router)
   }
