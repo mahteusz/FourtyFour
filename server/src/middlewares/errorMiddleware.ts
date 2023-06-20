@@ -1,11 +1,24 @@
 import { Request, Response, NextFunction } from "express";
-import HttpError from "./HttpError";
+import ControllerError from "./types/ControllerError";
+import ResponseError from "./types/ResponseError";
 
-const errorMiddleware = (error: HttpError, req: Request, res: Response, next: NextFunction) => {
-  const status = error.status || 500
-  const message = error.message || 'General server error'
+const errorMiddleware = (error: ControllerError, req: Request, res: Response, next: NextFunction) => {
+  let responseError: ResponseError = {
+    message: "General server error",
+    status: 500
+  }
 
-  res.status(status).json({"message": message})
+  if(error.code === 11000) { //Duplicate field
+    responseError.message = "Field already exists"
+    responseError.status = 409
+  }
+
+  if(error.name === 'CastError') {
+    responseError.message = "Resource not found"
+    responseError.status = 404
+  }
+
+  res.status(responseError.status).json({error:responseError.message})
 }
 
 export default errorMiddleware
