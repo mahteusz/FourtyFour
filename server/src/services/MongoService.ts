@@ -1,4 +1,4 @@
-import { Model, isValidObjectId } from "mongoose";
+import { Model } from "mongoose";
 import IRepository from "./types/IRepository";
 export default class MongoService<T> implements IRepository<T> {
   private readonly model: Model<T>
@@ -14,14 +14,12 @@ export default class MongoService<T> implements IRepository<T> {
   }
 
   async update(id: string, item: Partial<T>): Promise<Boolean> {
-    if(!isValidObjectId(id)) return false
 
     const updated = await this.model.updateOne({ _id: id }, item)
     return updated.modifiedCount >= 1
   }
 
   async delete(id: string): Promise<Boolean> {
-    if(!isValidObjectId(id)) return false
 
     const deleted = await this.model.deleteOne({ _id: id })
     return deleted.deletedCount === 1
@@ -33,7 +31,6 @@ export default class MongoService<T> implements IRepository<T> {
   }
 
   async findOne(id: string): Promise<T | null> {
-    if(!isValidObjectId(id)) return null
 
     const document = await this.model.findById(id)
     return document
