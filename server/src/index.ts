@@ -6,6 +6,7 @@ import UserController from "@controllers/UserController";
 import MongoService from "@services/MongoService";
 import UserModel from "@models/user";
 import IUser from "@models/types/IUser";
+import errorMiddleware from "@middlewares/errorMiddleware";
 class Server {
   public app: express.Application;
 
@@ -13,6 +14,7 @@ class Server {
     this.app = express();
     this.config()
     this.defineRoutes()
+    this.defineMiddlewares()
   }
 
   private config(): void {
@@ -34,6 +36,14 @@ class Server {
     const mongoService = new MongoService<IUser>(UserModel)
     const controller = new UserController(mongoService) 
     this.app.use(userRoute, new UserRouter(controller).router)
+  }
+
+  private defineMiddlewares(): void {
+    this.defineErrorMiddleware()
+  }
+
+  private defineErrorMiddleware(): void {
+    this.app.use(errorMiddleware)
   }
 
   public start(): void {
