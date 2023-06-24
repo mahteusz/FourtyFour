@@ -16,6 +16,8 @@ export default class MongoService<T> implements IRepository<T> {
   async update(id: string, item: Partial<T>): Promise<Boolean> {
 
     const updated = await this.model.updateOne({ _id: id }, item)
+    const doc = await this.model.findById(id)
+    doc?.save()
     return updated.modifiedCount >= 1
   }
 
