@@ -24,7 +24,6 @@ export default class JWTService implements IToken {
   public verify(token: string): UserPayload | null {
     try {
       const payload = jwt.verify(token, this.secret) as JWTDefaultPayload & UserPayload
-      console.log(payload)
       const { iat, exp, ...userPayload } = payload
       return userPayload
     } catch {

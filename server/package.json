@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "start": "npx nodemon --exec ts-node -r tsconfig-paths/register ./src/index.ts",
-    "test": "jest"
+    "test": "jest --runInBand"
   },
   "author": "mateusmarques200@gmail.com",
   "license": "ISC",
