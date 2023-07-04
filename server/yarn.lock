@@ -2494,9 +2494,9 @@
   "version" "5.1.0"
 
 "node-fetch@^2.6.7":
-  "integrity" "sha512-4I6pdBY1EthSqDmJkiNk3JIT8cswwR9nfeW/cPdUagJYEQG7R95WRH74wpz7ma8Gh/9dI9FP+OU+0E4FvtA55w=="
-  "resolved" "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.11.tgz"
-  "version" "2.6.11"
+  "integrity" "sha512-C/fGU2E8ToujUivIO0H+tpQ6HWo4eEmchoPIoXtxCrVghxdKq+QOHqEZW7tuP3KlV3bC8FRMO5nMCC7Zm1VP6g=="
+  "resolved" "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.12.tgz"
+  "version" "2.6.12"
   dependencies:
     "whatwg-url" "^5.0.0"
 
@@ -2835,16 +2835,23 @@
   "version" "6.3.0"
 
 "semver@^7.3.5":
-  "integrity" "sha512-Wvss5ivl8TMRZXXESstBA4uR5iXgEN/VC5/sOcuXdVLzcdkz4HWetIoRfG5gb5X+ij/G9rw9YoGn3QoQ8OCSpw=="
-  "resolved" "https://registry.npmjs.org/semver/-/semver-7.5.1.tgz"
-  "version" "7.5.1"
+  "integrity" "sha512-QBlUtyVk/5EeHbi7X0fw6liDZc7BBmEaSYn01fMU1OUYbf6GPsbTtd8WmnqbI20SeycoHSeiybkE/q1Q+qlThQ=="
+  "resolved" "https://registry.npmjs.org/semver/-/semver-7.5.3.tgz"
+  "version" "7.5.3"
   dependencies:
     "lru-cache" "^6.0.0"
 
 "semver@^7.3.8":
-  "integrity" "sha512-Wvss5ivl8TMRZXXESstBA4uR5iXgEN/VC5/sOcuXdVLzcdkz4HWetIoRfG5gb5X+ij/G9rw9YoGn3QoQ8OCSpw=="
-  "resolved" "https://registry.npmjs.org/semver/-/semver-7.5.1.tgz"
-  "version" "7.5.1"
+  "integrity" "sha512-QBlUtyVk/5EeHbi7X0fw6liDZc7BBmEaSYn01fMU1OUYbf6GPsbTtd8WmnqbI20SeycoHSeiybkE/q1Q+qlThQ=="
+  "resolved" "https://registry.npmjs.org/semver/-/semver-7.5.3.tgz"
+  "version" "7.5.3"
+  dependencies:
+    "lru-cache" "^6.0.0"
+
+"semver@^7.5.3":
+  "integrity" "sha512-QBlUtyVk/5EeHbi7X0fw6liDZc7BBmEaSYn01fMU1OUYbf6GPsbTtd8WmnqbI20SeycoHSeiybkE/q1Q+qlThQ=="
+  "resolved" "https://registry.npmjs.org/semver/-/semver-7.5.3.tgz"
+  "version" "7.5.3"
   dependencies:
     "lru-cache" "^6.0.0"
 
@@ -2852,13 +2859,6 @@
   "integrity" "sha512-+GB6zVA9LWh6zovYQLALHwv5rb2PHGlJi3lfiqIHxR0uuwCgefcOJc59v9fv1w8GbStwxuuqqAjI9NMAOOgq1A=="
   "resolved" "https://registry.npmjs.org/semver/-/semver-7.0.0.tgz"
   "version" "7.0.0"
-
-"semver@7.x":
-  "integrity" "sha512-QBlUtyVk/5EeHbi7X0fw6liDZc7BBmEaSYn01fMU1OUYbf6GPsbTtd8WmnqbI20SeycoHSeiybkE/q1Q+qlThQ=="
-  "resolved" "https://registry.npmjs.org/semver/-/semver-7.5.3.tgz"
-  "version" "7.5.3"
-  dependencies:
-    "lru-cache" "^6.0.0"
 
 "send@0.18.0":
   "integrity" "sha512-qqWzuOjSFOuqPjFe4NOsMLafToQQwBSOEpS+FwEt3A2V3vKubTquT3vmLTQpFgMXp8AlFWFuP1qKaJZOtPpVXg=="
@@ -3137,9 +3137,9 @@
   "version" "0.0.3"
 
 "ts-jest@^29.1.0":
-  "integrity" "sha512-ZhNr7Z4PcYa+JjMl62ir+zPiNJfXJN6E8hSLnaUKhOgqcn8vb3e537cpkd0FuAfRK3sR1LSqM1MOhliXNgOFPA=="
-  "resolved" "https://registry.npmjs.org/ts-jest/-/ts-jest-29.1.0.tgz"
-  "version" "29.1.0"
+  "integrity" "sha512-D6xjnnbP17cC85nliwGiL+tpoKN0StpgE0TeOjXQTU6MVCfsB4v7aW05CgQ/1OywGb0x/oy9hHFnN+sczTiRaA=="
+  "resolved" "https://registry.npmjs.org/ts-jest/-/ts-jest-29.1.1.tgz"
+  "version" "29.1.1"
   dependencies:
     "bs-logger" "0.x"
     "fast-json-stable-stringify" "2.x"
@@ -3147,7 +3147,7 @@
     "json5" "^2.2.3"
     "lodash.memoize" "4.x"
     "make-error" "1.x"
-    "semver" "7.x"
+    "semver" "^7.5.3"
     "yargs-parser" "^21.0.1"
 
 "ts-node@^10.9.1", "ts-node@>=9.0.0":
