@@ -96,6 +96,7 @@ export default {
     "^@routes/(.*)$": "<rootDir>/src/routes/$1",
     "^@services/(.*)$": "<rootDir>/src/services/$1",
     "^@util/(.*)$": "<rootDir>/src/util/$1",
+    "^@helpers/(.*)$": "<rootDir>/src/helpers/$1",
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
