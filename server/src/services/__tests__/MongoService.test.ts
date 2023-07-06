@@ -1,36 +1,31 @@
-import { connect, disconnect } from "@helpers/mongodb-memory.server";
-import IUser from "@models/types/IUser";
-import UserModel from "@models/user";
-import BcryptService from "@services/BcryptService";
+import { ITest, TestModel, connect, disconnect } from "@helpers/mongodb-memory.server";
 import MongoService from "@services/MongoService";
 import { ObjectId } from "bson";
 
 
 beforeAll(connect)
 afterAll(disconnect)
-const mongoService = new MongoService<IUser>(UserModel)
+const mongoService = new MongoService<ITest>(TestModel)
 
 describe('Creating documents', () => {
   it('should create a document if everything is ok', async () => {
-    const newUserData = {
-      username: "username",
-      email: "email@test.com",
-      password: "pass1234"
-    } as IUser
-    const newUser = await mongoService.create(newUserData)
-    const bcryptService = new BcryptService(1)
-    const isPasswordEncrypted = await bcryptService.compare(newUserData.password, newUser.password)
-    expect(newUser._id).toBeInstanceOf(ObjectId)
-    expect(newUser.__v).toEqual(0)
-    expect(newUser.username).toEqual(newUserData.username)
-    expect(newUser.email).toEqual(newUserData.email)
-    expect(isPasswordEncrypted).toBe(true)
+    const newTest = {
+      stringField: 'simple-test',
+      numberField: 0,
+    } as ITest
+
+    const test = await mongoService.create(newTest)
+    expect(test._id).toBeInstanceOf(ObjectId)
+    expect(test.stringField).toBe(newTest.stringField)
+    expect(test.numberField).toBe(newTest.numberField)
+    expect(test.optionalField).toBe(newTest.optionalField)
   })
 
-  it('should throw an error if fields are missing', async () => {
-    const newUserData = {
-      username: "username",
-    } as IUser
-    expect(async () => await mongoService.create(newUserData)).rejects.toThrow() 
+  it('should throw an error if a required field is missing', async () => {
+    const newTest = {
+      stringField: 'simple-test',
+    } as ITest
+
+    expect(async () => await mongoService.create(newTest)).rejects.toThrow()
   })
 })
