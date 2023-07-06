@@ -2,9 +2,16 @@ import { ITest, TestModel, connect, disconnect, clearCollections } from "@helper
 import MongoService from "@services/MongoService";
 import { ObjectId } from "bson";
 
+const createTestDoc = async () => {
+  const newTest = { stringField: 'simple-test', numberField: 0 } as ITest
+  const testDoc = await mongoService.create(newTest)
+  return testDoc
+}
 
-beforeAll(async() => await connect())
-afterAll(async() => await disconnect())
+
+
+beforeAll(async () => await connect())
+afterAll(async () => await disconnect())
 const mongoService = new MongoService<ITest>(TestModel)
 
 describe('Creating documents', () => {
@@ -29,8 +36,7 @@ describe('Updating documents', () => {
   let id: string
 
   beforeEach(async () => {
-    const newTest = { stringField: 'simple-test', numberField: 0 } as ITest
-    const testDoc = await mongoService.create(newTest)
+    const testDoc = await createTestDoc()
     id = testDoc._id
   })
 
@@ -46,5 +52,27 @@ describe('Updating documents', () => {
   it('should return false and not update the document if id is not found/invalid', async () => {
     const updated = await mongoService.update("not-found-id", { stringField: 'updated' })
     expect(updated).toBe(false)
+  })
+})
+
+describe('Deleting documents', () => {
+  let id: string
+  beforeEach(async () => {
+    const testDoc = await createTestDoc()
+    id = testDoc._id
+  })
+
+  afterEach(async () => {
+    await clearCollections()
+  })
+
+  it('should return true and delete the document if everything is ok', async () => {
+    const deleted = await mongoService.delete(id)
+    expect(deleted).toBe(true)
+  })
+
+  it('should return false and not delete the document if id is not found/invalid', async () => {
+    const deleted = await mongoService.delete("not-found-id")
+    expect(deleted).toBe(false)
   })
 })
