@@ -1,5 +1,5 @@
 import express from "express";
-import connectToDB from "@config/db";
+import connectToDB from "@helpers/db";
 import userRoute from "@config/routes";
 import UserRouter from "@routes/UserRouter";
 import UserController from "@controllers/UserController";
