@@ -34,6 +34,18 @@ export const connect = async () => {
 }
 
 export const disconnect = async () => {
+  await clear()
   await mongoose.disconnect()
   await mongoDb.stop()
+}
+
+export const clearCollections = async () => {
+  const collections = await mongoose.connection.db.collections();
+  for (const collection of collections) {
+    await collection.deleteMany({});
+  }
+}
+
+export const clear = async () => {
+  await mongoose.connection.db.dropDatabase();
 }
