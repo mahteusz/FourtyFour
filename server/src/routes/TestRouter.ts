@@ -1,4 +1,4 @@
-import BaseRouter from "../BaseRouter";
+import BaseRouter from "./BaseRouter";
 
 export default class TestRouter extends BaseRouter {
   defineRoutes() {

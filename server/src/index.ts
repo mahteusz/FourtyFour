@@ -11,7 +11,7 @@ import IUser from "@models/types/IUser";
 import errorMiddleware from "@middlewares/errorMiddleware";
 import http from "http"
 import BaseController from "@controllers/baseController";
-import TestRouter from "@routes/__tests__/TestRouter";
+import TestRouter from "@routes/TestRouter";
 class Server {
   public app: express.Application;
   private listener: http.Server;
