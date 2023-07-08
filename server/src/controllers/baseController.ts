@@ -26,9 +26,9 @@ export default class BaseController<T> implements IBaseController {
     try {
       const resource = await this.repository.findOne(req.params.id)
       if(!resource)
-        next({ name:"NotFound" })
-      res.status(200).json({ data: resource })
+        return next({ name:"NotFound" })
 
+      res.status(200).json({ data: resource })
     } catch (error) {
       next(error)
     }
@@ -43,9 +43,9 @@ export default class BaseController<T> implements IBaseController {
     try {
       const updated = await this.repository.update(req.params.id, req.body)
       if (!updated)
-        next({ name: "NotFound" })
-      res.status(204).json({})
+        return next({ name: "NotFound" })
 
+      res.status(204).json({})
     } catch (error) {
       next(error)
     }
@@ -55,8 +55,9 @@ export default class BaseController<T> implements IBaseController {
     try {
       const deleted = await this.repository.delete(req.params.id)
       if (!deleted)
-        next({ name: "NotFound" })
-        res.status(204).json({})
+        return next({ name: "NotFound" })
+        
+      res.status(204).json({})
     } catch(error) {
       next(error)
     }

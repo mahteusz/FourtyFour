@@ -1,12 +1,7 @@
 import { ITest, TestModel, connect, disconnect, clearCollections } from "@helpers/mongodb-memory.server";
 import MongoService from "@services/MongoService";
 import { ObjectId } from "bson";
-
-const createTestDoc = async () => {
-  const newTest = { stringField: 'simple-test', numberField: 0 } as ITest
-  const testDoc = await mongoService.create(newTest)
-  return testDoc
-}
+import { createTestDoc } from "@util/tests";
 
 beforeAll(async () => await connect())
 afterAll(async () => await disconnect())

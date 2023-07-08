@@ -1,5 +1,4 @@
 const baseRoute = "/api"
 const baseUserRoute = "/users"
-const userRoute = `${baseRoute}${baseUserRoute}`
-
-export default userRoute
+export const userRoute = `${baseRoute}${baseUserRoute}`
+export const testRoute = `${baseRoute}/test`
