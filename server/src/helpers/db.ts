@@ -1,7 +1,7 @@
 import mongoose, { ConnectOptions } from 'mongoose'
 import { MONGODB_URI } from '@util/secrets'
 
-const connectToDB = async () => {
+export const connectToDB = async () => {
   const connectOptions: ConnectOptions = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -19,4 +19,6 @@ const connectToDB = async () => {
   }
 }
 
-export default connectToDB
+export const disconnectDB = async () => {
+  await mongoose.disconnect()
+}
