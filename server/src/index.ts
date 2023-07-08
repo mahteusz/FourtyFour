@@ -1,6 +1,8 @@
 import express from "express";
 import { connectToDB, disconnectDB } from "@helpers/db";
-import userRoute from "@config/routes";
+import { ITest, TestModel, connect as connectToFakeDB, disconnect as disconnectFromFakeDB }
+  from "@helpers/mongodb-memory.server";
+import { userRoute, testRoute } from "@config/routes";
 import UserRouter from "@routes/UserRouter";
 import UserController from "@controllers/UserController";
 import MongoService from "@services/MongoService";
@@ -8,6 +10,8 @@ import UserModel from "@models/user";
 import IUser from "@models/types/IUser";
 import errorMiddleware from "@middlewares/errorMiddleware";
 import http from "http"
+import BaseController from "@controllers/baseController";
+import TestRouter from "@routes/__tests__/TestRouter";
 class Server {
   public app: express.Application;
   private listener: http.Server;
@@ -29,17 +33,26 @@ class Server {
   }
 
   private configDB(): void {
-    connectToDB()
+    process.env.NODE_ENV === "DEV" ? connectToFakeDB() : connectToDB()
   }
 
   private defineRoutes(): void {
     this.defineUserRoutes()
+    if (process.env.NODE_ENV == "DEV") {
+      this.defineTestRoutes()
+    }
   }
 
   private defineUserRoutes(): void {
     const mongoService = new MongoService<IUser>(UserModel)
-    const controller = new UserController(mongoService) 
+    const controller = new UserController(mongoService)
     this.app.use(userRoute, new UserRouter(controller).router)
+  }
+
+  private defineTestRoutes(): void {
+    const mongoService = new MongoService<ITest>(TestModel)
+    const controller = new BaseController<ITest>(mongoService)
+    this.app.use(testRoute, new TestRouter(controller).router)
   }
 
   private defineMiddlewares(): void {
@@ -57,7 +70,7 @@ class Server {
   }
 
   public async close() {
-    await disconnectDB()
+    process.env.NODE_ENV === "DEV" ? await disconnectFromFakeDB() : await disconnectDB()
     this.listener.close()
   }
 
