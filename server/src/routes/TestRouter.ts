@@ -8,4 +8,4 @@ export default class TestRouter extends BaseRouter {
     this.router.patch("/:id", this.controller.patch)
     this.router.post("/", this.controller.post)
   }
-}	
+}
