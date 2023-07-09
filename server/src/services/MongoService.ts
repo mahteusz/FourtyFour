@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { FilterQuery, Model } from "mongoose";
 import IRepository from "./types/IRepository";
 export default class MongoService<T> implements IRepository<T> {
   private readonly model: Model<T>
@@ -14,7 +14,6 @@ export default class MongoService<T> implements IRepository<T> {
   }
 
   async update(id: string, item: Partial<T>): Promise<Boolean> {
-
     const updated = await this.model.updateOne({ _id: id }, item)
     const doc = await this.model.findById(id)
     doc?.save()
@@ -22,7 +21,6 @@ export default class MongoService<T> implements IRepository<T> {
   }
 
   async delete(id: string): Promise<Boolean> {
-
     const deleted = await this.model.deleteOne({ _id: id })
     return deleted.deletedCount === 1
   }
@@ -33,9 +31,12 @@ export default class MongoService<T> implements IRepository<T> {
   }
 
   async findOne(id: string): Promise<T | null> {
-
     const document = await this.model.findById(id)
     return document
+  }
 
+  async findOneFilteringBy(filter: {}): Promise<T | null> {
+    const document = await this.model.findOne(filter)
+    return document
   }
 }

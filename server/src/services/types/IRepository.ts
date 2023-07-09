@@ -4,6 +4,7 @@ interface IRepository<T> {
   delete(id: string): Promise<Boolean>
   find(): Promise<T[]>
   findOne(id: string): Promise<T | null>
+  findOneFilteringBy(filter: {}): Promise<T | null>
 }
 
 export default IRepository

@@ -95,4 +95,19 @@ describe('Reading documents', () => {
     const doc = await mongoService.findOne('not-found-id')
     expect(doc).toBeNull()
   })
+
+  it('should return the specified doc with filter', async () => {
+    const doc = await mongoService.findOneFilteringBy({ stringField: 'test' })
+    expect(doc).not.toBeNull()
+  })
+
+  it('should return the specified doc with a condition filter', async () => {
+    const doc = await mongoService.findOneFilteringBy({ numberField: { $gt: 122 } })
+    expect(doc).not.toBeNull()
+  })
+
+  it('should return null if filter did not find a doc', async () => {
+    const doc = await mongoService.findOneFilteringBy({ stringField: 'value-that-no-doc-has' })
+    expect(doc).toBeNull()
+  })
 })
