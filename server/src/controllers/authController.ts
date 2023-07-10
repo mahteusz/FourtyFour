@@ -17,7 +17,7 @@ export default class AuthController {
     this.tokenService = tokenService
   }
 
-  public async login(req: Request, res: Response, next: NextFunction) {
+  public login = async (req: Request, res: Response, next: NextFunction) => {
     const { username, password } = req.body
     const user = await this.repository.findOneFilteringBy({ username: username })
     if (!user) return next({ name: "InvalidCredentials" })
