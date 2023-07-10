@@ -2,7 +2,7 @@ import express from "express";
 import { connectToDB, disconnectDB } from "@helpers/db";
 import { ITest, TestModel, connect as connectToFakeDB, disconnect as disconnectFromFakeDB }
   from "@helpers/mongodb-memory.server";
-import { userRoute, testRoute } from "@config/routes";
+import { userRoute, testRoute, authRoute } from "@config/routes";
 import UserRouter from "@routes/UserRouter";
 import UserController from "@controllers/UserController";
 import MongoService from "@services/MongoService";
@@ -12,6 +12,13 @@ import errorMiddleware from "@middlewares/errorMiddleware";
 import http from "http"
 import BaseController from "@controllers/baseController";
 import TestRouter from "@routes/TestRouter";
+import AuthController from "@controllers/AuthController";
+import BcryptService from "@services/BcryptService";
+import JWTService from "@services/JWTService";
+import saltRounds from "@config/encrypt";
+import { JWT_SECRET } from "@util/secrets";
+import { accessTokenTimeToExpire } from "@config/auth";
+import AuthRouter from "@routes/AuthRouter";
 class Server {
   public app: express.Application;
   private listener: http.Server;
@@ -38,6 +45,7 @@ class Server {
 
   private defineRoutes(): void {
     this.defineUserRoutes()
+    this.defineAuthRoutes()
     if (process.env.NODE_ENV == "DEV") {
       this.defineTestRoutes()
     }
@@ -47,6 +55,14 @@ class Server {
     const mongoService = new MongoService<IUser>(UserModel)
     const controller = new UserController(mongoService)
     this.app.use(userRoute, new UserRouter(controller).router)
+  }
+
+  private defineAuthRoutes(): void {
+    const mongoService = new MongoService<IUser>(UserModel)
+    const encryptService = new BcryptService(saltRounds)
+    const tokenService = new JWTService(JWT_SECRET!, accessTokenTimeToExpire)
+    const controller = new AuthController(mongoService, encryptService, tokenService)
+    this.app.use(authRoute, new AuthRouter(controller).router)
   }
 
   private defineTestRoutes(): void {

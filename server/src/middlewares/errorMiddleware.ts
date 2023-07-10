@@ -6,7 +6,8 @@ const allErrors: { [key: string]: ResponseError } = {
   "CastError": { message: "Resource not found", status: 404 },
   "EmptyRequest": { message: "Empty body", status: 422 },
   "NotFound": { message: "Resource not found", status: 404 },
-  "ValidationError": { message: "Validation failed", status: 400 }
+  "ValidationError": { message: "Validation failed", status: 400 },
+  "InvalidCredentials": { message: "The provided credentials are invalid", status: 401 }
 }
 
 const errorMiddleware = (error: ControllerError, req: Request, res: Response, next: NextFunction) => {
