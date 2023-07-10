@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 import IUser from "./types/IUser";
-import BcryptService from "@services/BcryptService";
+import { BcryptService } from "@services/index";
 import saltRounds from "@config/encrypt";
 
 export const userSchema: Schema<IUser> = new Schema({
@@ -22,7 +22,7 @@ export const userSchema: Schema<IUser> = new Schema({
   },
 }, { timestamps: true });
 
-userSchema.pre("save", async function(this: IUser, next) {
+userSchema.pre("save", async function (this: IUser, next) {
   const encryptService = new BcryptService(saltRounds)
   this.password = await encryptService.encrypt(this.password)
   next()

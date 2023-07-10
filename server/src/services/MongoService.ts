@@ -1,9 +1,9 @@
-import { FilterQuery, Model } from "mongoose";
-import IRepository from "./types/IRepository";
+import { Model } from "mongoose";
+import { IRepository } from "./types/index";
 export default class MongoService<T> implements IRepository<T> {
   private readonly model: Model<T>
 
-  constructor(model: Model<T>){
+  constructor(model: Model<T>) {
     this.model = model
   }
 

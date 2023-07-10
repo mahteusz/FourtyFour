@@ -1,5 +1,5 @@
 import { Router } from "express";
-import IBaseController from "@controllers/types/IBaseController";
+import { IBaseController } from "@controllers/types/index";
 
 export default abstract class BaseRouter {
   public readonly router: Router;

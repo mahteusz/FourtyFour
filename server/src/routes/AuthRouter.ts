@@ -1,5 +1,4 @@
-import AuthController from "@controllers/AuthController";
-import BaseRouter from "./BaseRouter";
+import { AuthController } from "@controllers/index";
 import { Router } from "express";
 
 export default class AuthRouter {

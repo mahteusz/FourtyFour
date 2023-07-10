@@ -1,4 +1,4 @@
-import BcryptService from "@services/BcryptService"
+import { BcryptService } from "@services/index"
 import saltRounds from "@config/encrypt"
 import bcrypt from 'bcrypt'
 
@@ -19,7 +19,7 @@ describe("Encryptation", () => {
 })
 
 describe('Comparing', () => {
-  it('should return true when the encrypted text and text are equal', async() => {
+  it('should return true when the encrypted text and text are equal', async () => {
     const randomString = generateRandomString()
     const encrypted = await bcryptService.encrypt(randomString)
     const comparing = await bcryptService.compare(randomString, encrypted)

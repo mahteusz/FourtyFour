@@ -1,6 +1,6 @@
 import IBaseController from "./types/IBaseController";
 import { Request, Response, NextFunction } from "express"
-import IRepository from "@services/types/IRepository";
+import { IRepository } from "@services/types/index";
 export default class BaseController<T> implements IBaseController {
   protected readonly repository: IRepository<T>
 
