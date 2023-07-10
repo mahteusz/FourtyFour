@@ -3,22 +3,16 @@ import { connectToDB, disconnectDB } from "@helpers/db";
 import { ITest, TestModel, connect as connectToFakeDB, disconnect as disconnectFromFakeDB }
   from "@helpers/mongodb-memory.server";
 import { userRoute, testRoute, authRoute } from "@config/routes";
-import UserRouter from "@routes/UserRouter";
-import UserController from "@controllers/UserController";
-import MongoService from "@services/MongoService";
-import UserModel from "@models/user";
-import IUser from "@models/types/IUser";
-import errorMiddleware from "@middlewares/errorMiddleware";
+import { UserRouter, TestRouter, AuthRouter } from "@routes/index";
+import { UserController, BaseController, AuthController } from "@controllers/index"
+import { MongoService, BcryptService, JWTService } from "@services/index"
+import { UserModel } from "@models/index";
+import { IUser } from "@models/types/index";
+import { errorMiddleware } from "@middlewares/index";
 import http from "http"
-import BaseController from "@controllers/baseController";
-import TestRouter from "@routes/TestRouter";
-import AuthController from "@controllers/AuthController";
-import BcryptService from "@services/BcryptService";
-import JWTService from "@services/JWTService";
 import saltRounds from "@config/encrypt";
 import { JWT_SECRET } from "@util/secrets";
 import { accessTokenTimeToExpire } from "@config/auth";
-import AuthRouter from "@routes/AuthRouter";
 class Server {
   public app: express.Application;
   private listener: http.Server;

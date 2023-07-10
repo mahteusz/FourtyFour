@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { JWT_SECRET } from "@util/secrets";
-import JWTService from "@services/JWTService";
-import IUser from "@models/types/IUser";
+import { JWTService } from "@services/index";
+import { IUser } from "@models/types/index";
 import { accessTokenTimeToExpire, refreshTokenTimeToExpire } from "@config/auth";
 import BaseController from "./baseController";
 export default class UserController extends BaseController<IUser>{

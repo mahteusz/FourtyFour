@@ -1,10 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from 'jsonwebtoken'
-import { JWT_SECRET } from "@util/secrets";
-import IUser from "@models/types/IUser";
-import IRepository from "@services/types/IRepository";
-import IEncrypter from "@services/types/IEncrypter";
-import IToken from "@services/types/IToken";
+import { IUser } from "@models/types/index";
+import { IRepository, IEncrypter } from "@services/types/index";
+import { IToken } from "@services/types/index";
 
 export default class AuthController {
   private readonly repository: IRepository<IUser>

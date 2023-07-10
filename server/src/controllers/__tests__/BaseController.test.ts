@@ -1,9 +1,8 @@
 import supertest from "supertest";
 import server from '../../'
 import { testRoute } from "@config/routes";
-import { clearCollections } from "@helpers/mongodb-memory.server";
+import { ITest, clearCollections } from "@helpers/mongodb-memory.server";
 import { createTestDoc } from "@util/tests";
-import { ITest } from "@helpers/mongodb-memory.server";
 
 let testServer: typeof server
 

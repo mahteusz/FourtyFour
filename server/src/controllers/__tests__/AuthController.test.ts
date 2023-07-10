@@ -1,9 +1,9 @@
 import { createUserTestDoc } from "@util/tests";
-import IUser from "@models/types/IUser";
+import { IUser } from "@models/types/index";
 import supertest from "supertest";
 import server from '../../'
 import { authRoute } from "@config/routes";
-import JWTService from "@services/JWTService";
+import { JWTService } from "@services/index";
 import { JWT_SECRET } from "@util/secrets";
 import { accessTokenTimeToExpire } from "@config/auth";
 import { clearCollections } from "@helpers/mongodb-memory.server";

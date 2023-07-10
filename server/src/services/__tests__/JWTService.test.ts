@@ -1,4 +1,4 @@
-import JWTService from "@services/JWTService";
+import { JWTService } from "@services/index";
 import jwt from 'jsonwebtoken'
 import { JWT_SECRET } from "@util/secrets";
 import { UserPayload } from "@config/auth";

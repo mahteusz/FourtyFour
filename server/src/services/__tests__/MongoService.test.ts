@@ -1,5 +1,6 @@
-import { ITest, TestModel, connect, disconnect, clearCollections } from "@helpers/mongodb-memory.server";
-import MongoService from "@services/MongoService";
+import { ITest, TestModel, connect, disconnect, clearCollections }
+  from "@helpers/mongodb-memory.server";
+import { MongoService } from "@services/index";
 import { ObjectId } from "bson";
 import { createTestDoc } from "@util/tests";
 
