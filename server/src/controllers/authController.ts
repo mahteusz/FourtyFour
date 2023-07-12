@@ -6,12 +6,15 @@ import { IToken } from "@services/types/index";
 export default class AuthController {
   private readonly repository: IRepository<IUser>
   private readonly encrypter: IEncrypter
-  private readonly tokenService: IToken
+  private readonly accessTokenService: IToken
+  private readonly refreshTokenService: IToken
 
-  constructor(repository: IRepository<IUser>, encrypter: IEncrypter, tokenService: IToken) {
+  constructor(repository: IRepository<IUser>, encrypter: IEncrypter,
+    accessTokenService: IToken, refreshTokenService: IToken) {
     this.repository = repository
     this.encrypter = encrypter
-    this.tokenService = tokenService
+    this.accessTokenService = accessTokenService
+    this.refreshTokenService = refreshTokenService
   }
 
   public login = async (req: Request, res: Response, next: NextFunction) => {
@@ -22,7 +25,8 @@ export default class AuthController {
     const isPasswordEqual = await this.encrypter.compare(password, user.password)
     if (!isPasswordEqual) return next({ name: "InvalidCredentials" })
 
-    const token = this.tokenService.generate({ user: user._id })
-    res.status(200).send({ data: token })
+    const accessToken = this.accessTokenService.generate({ user: user._id })
+    const refreshToken = this.refreshTokenService.generate({ user: user._id })
+    res.status(200).json({ data: { accessToken, refreshToken } })
   }
 }
