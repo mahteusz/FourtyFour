@@ -14,7 +14,7 @@ export default class UserController extends BaseController<IUser>{
       const accessToken = accessTokenService.generate({ user: newUser._id })
       const refreshToken = refreshTokenService.generate({ user: newUser._id })
 
-      res.status(200).json({ accessToken, refreshToken })
+      res.status(200).json({ data: { accessToken, refreshToken } })
 
     } catch (error) {
       console.log(error)
