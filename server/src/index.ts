@@ -11,8 +11,8 @@ import { IUser } from "@models/types/index";
 import { errorMiddleware } from "@middlewares/index";
 import http from "http"
 import saltRounds from "@config/encrypt";
-import { JWT_SECRET } from "@util/secrets";
-import { accessTokenTimeToExpire } from "@config/auth";
+import { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } from "@util/secrets";
+import { accessTokenTimeToExpire, refreshTokenTimeToExpire } from "@config/auth";
 class Server {
   public app: express.Application;
   private listener: http.Server;
@@ -54,8 +54,9 @@ class Server {
   private defineAuthRoutes(): void {
     const mongoService = new MongoService<IUser>(UserModel)
     const encryptService = new BcryptService(saltRounds)
-    const tokenService = new JWTService(JWT_SECRET!, accessTokenTimeToExpire)
-    const controller = new AuthController(mongoService, encryptService, tokenService)
+    const accessTokenService = new JWTService(JWT_ACCESS_SECRET!, accessTokenTimeToExpire)
+    const refreshTokenService = new JWTService(JWT_REFRESH_SECRET!, refreshTokenTimeToExpire)
+    const controller = new AuthController(mongoService, encryptService, accessTokenService, refreshTokenService)
     this.app.use(authRoute, new AuthRouter(controller).router)
   }
 

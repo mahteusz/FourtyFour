@@ -4,8 +4,8 @@ import supertest from "supertest";
 import server from '../../'
 import { authRoute } from "@config/routes";
 import { JWTService } from "@services/index";
-import { JWT_SECRET } from "@util/secrets";
-import { accessTokenTimeToExpire } from "@config/auth";
+import { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } from "@util/secrets";
+import { accessTokenTimeToExpire, refreshTokenTimeToExpire } from "@config/auth";
 import { clearCollections } from "@helpers/mongodb-memory.server";
 
 let testServer: typeof server
@@ -32,9 +32,11 @@ describe('Login', () => {
       email: userDoc.email,
       password: originalPassword
     })
-    const tokenService = new JWTService(JWT_SECRET!, accessTokenTimeToExpire)
+    const accessTokenService = new JWTService(JWT_ACCESS_SECRET!, accessTokenTimeToExpire)
+    const refreshTokenService = new JWTService(JWT_REFRESH_SECRET!, refreshTokenTimeToExpire)
     expect(response.status).toBe(200)
-    expect(response.body.data).toBe(tokenService.generate({ user: userDoc._id }))
+    expect(response.body.data.accessToken).toBe(accessTokenService.generate({ user: userDoc._id }))
+    expect(response.body.data.refreshToken).toBe(refreshTokenService.generate({ user: userDoc._id }))
   })
 
   it('should return an InvalidCredentials error if the provided username is not found', async () => {

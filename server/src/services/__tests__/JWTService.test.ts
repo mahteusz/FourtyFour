@@ -1,9 +1,9 @@
 import { JWTService } from "@services/index";
 import jwt from 'jsonwebtoken'
-import { JWT_SECRET } from "@util/secrets";
+import { JWT_ACCESS_SECRET } from "@util/secrets";
 import { UserPayload } from "@config/auth";
 
-const jwtService = new JWTService(JWT_SECRET!, "1s")
+const jwtService = new JWTService(JWT_ACCESS_SECRET!, "1s")
 const userPayload: UserPayload = {
   user: "test"
 }
@@ -11,7 +11,7 @@ const userPayload: UserPayload = {
 describe('Token generation', () => {
   it('should generate a user token the same as using JWT directly', () => {
     const jwtServiceToken = jwtService.generate(userPayload)
-    const generatedDirectly = jwt.sign(userPayload, JWT_SECRET!, { expiresIn: "1s" })
+    const generatedDirectly = jwt.sign(userPayload, JWT_ACCESS_SECRET!, { expiresIn: "1s" })
     expect(jwt.decode(jwtServiceToken)).toEqual(jwt.decode(generatedDirectly))
   })
 })
