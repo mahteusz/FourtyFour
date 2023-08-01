@@ -4,7 +4,7 @@ import { ITest, TestModel, connect as connectToFakeDB, disconnect as disconnectF
   from "@helpers/mongodb-memory.server";
 import { userRoute, testRoute, authRoute } from "@config/routes";
 import { UserRouter, TestRouter, AuthRouter } from "@routes/index";
-import { UserController, BaseController, AuthController } from "@controllers/index"
+import { UserController, BaseController, AuthController, TestController } from "@controllers/index"
 import { MongoService, BcryptService, JWTService } from "@services/index"
 import { UserModel } from "@models/index";
 import { IUser } from "@models/types/index";
@@ -62,7 +62,7 @@ class Server {
 
   private defineTestRoutes(): void {
     const mongoService = new MongoService<ITest>(TestModel)
-    const controller = new BaseController<ITest>(mongoService)
+    const controller = new TestController(mongoService)
     this.app.use(testRoute, new TestRouter(controller).router)
   }
 
